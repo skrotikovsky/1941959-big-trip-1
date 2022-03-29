@@ -9,7 +9,6 @@
     "build": "webpack --mode development",
     "start": "webpack serve --open --mode development"
   },
-  "type": "module",
   "dependencies": {
     "dayjs": "1.10.7"
 
