@@ -1,4 +1,4 @@
-//import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -45,10 +45,16 @@ function getDescription() {
       `${obj + cur  }\n`,'');
 }
 
-//function getDate() {
-//  return dayjs().hour();
-//};
-//console.log(getDate());
+function getDate() {
+  return dayjs().format('D MMM');
+}
+console.log(getDate());
+
+function getDuration() {
+  const dateDuration = getDate();
+//  console.log(newDate);
+}
+
 const travelPoint =() => ({
   travelPointTime: null,
   duration: null,
