@@ -6,6 +6,7 @@ import {HeadInfo} from './view/head-info.js';
 import {AddNewPoint} from './view/add-new-point.js';
 import {AddWithoutDestination} from './view/add-without-destination.js';
 import {AddWithoutOffers} from './view/add-without-offers.js';
+import {travelPoint} from './mock/travel-point.js';
 
 const RenderPosition = {
   BEFOREBEGIN : 'beforebegin',
@@ -50,3 +51,6 @@ renderTemplate(addWithoutOffers, AddWithoutOffers(), RenderPosition.BEFOREBEGIN)
 //  renderTemplate(addNewPoint, AddNewPoint(), RenderPosition.BEFOREBEGIN);
 //  addEventBtn.style.disabled = true;
 //});
+const mocki = Array.from(Array(20),() => travelPoint());
+
+console.log(mocki);

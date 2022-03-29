@@ -1,20 +1,18 @@
 import dayjs from 'dayjs';
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+const getRandomInt = (max) => Math.floor(Math.random() * max);
 
-function getDestination() {
+const getDestination = () => {
   const cities = ['London', 'Moscow', 'Toronto', 'Tokyo'];
   return cities[getRandomInt(cities.length)];
-}
+};
 
-function getPointType() {
+let getPointType = () => {
   const types = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
   return types[getRandomInt(types.length)];
-}
+};
 
-function getOffer() {
+const getOffer = () => {
   const offers = {
     'offer1': 10,
     'offer2': 20,
@@ -27,9 +25,9 @@ function getOffer() {
       obj[cur[0]] = cur[1];
       return obj;
     }, {});
-}
+};
 
-function getDescription() {
+const getDescription = () => {
   const types = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     'Cras aliquet varius magna, non porta ligula feugiat eget.',
     'Fusce tristique felis at fermentum pharetra.',
@@ -43,26 +41,34 @@ function getDescription() {
   return types.filter((x) => getRandomInt(2)?x:null)
     .reduce((obj, cur)=>
       `${obj + cur  }\n`,'');
-}
+};
 
-function getDate() {
-  return dayjs().format('D MMM');
-}
-console.log(getDate());
+const getDate = () => dayjs().format('D MMM');
 
-function getDuration() {
-  const dateDuration = getDate();
-//  console.log(newDate);
-}
+const getChange = () => [getRandomInt(2),getRandomInt(24),getRandomInt(60)];
 
-const travelPoint =() => ({
-  travelPointTime: null,
+const getDuration = () => {
+  const gapArr = getChange();
+  const newDate = dayjs().add(gapArr[0], 'day').add(gapArr[1], 'hour').add(gapArr[2], 'minute');
+  return dayjs().subtract(dayjs()).format('dd hh mm ss')//newDate.subtract(dayjs()).format(`hh${'Н '}mm${'М'}`);
+};
+/*
+* СПРОСИТЬ КАК ДЕЛАТЬ ЭТИ ****** ВРЕМЕННЫЕ ПРОМЕЖУТКИ (КАК ВЫЧЕСТЬ ДАТУ ИЗ ДАТУ И ПОЛУЧИТЬ НАПРИМЕР 1Д 2Ч 45М
+*
+*
+*
+* */
+console.log(getDuration());
+
+export const travelPoint = () => ({
+  travelPointTime: getDate(),
+  timeGap : null,
   duration: null,
   destination: getDestination(),
   travelPointType: getPointType(),
   description: getDescription(),
   offers: getOffer(),
-  img: `http://picsum.photos/248/152?r=${toString(getRandomInt(1000))}`,
+  img: `http://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
   isFavorite: Boolean(getRandomInt(2)),
 });
 
