@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 
+
 const getRandomInt = (max) => Math.floor(Math.random() * max);
 
 const getDestination = () => {
@@ -50,26 +51,33 @@ const getChange = () => [getRandomInt(2),getRandomInt(24),getRandomInt(60)];
 const getDuration = () => {
   const gapArr = getChange();
   const newDate = dayjs().add(gapArr[0], 'day').add(gapArr[1], 'hour').add(gapArr[2], 'minute');
-  return dayjs().subtract(dayjs()).format('dd hh mm ss')//newDate.subtract(dayjs()).format(`hh${'Н '}mm${'М'}`);
+  debugger;
+  const alfa = dayjs();
+  const beta = alfa.clone();
+  const delta =  alfa.subtract(beta);
+  //newDate.subtract(dayjs()).format(`hh${'Н '}mm${'М'}`);
+
+  return delta.format('hh mm ss');
 };
 /*
-* СПРОСИТЬ КАК ДЕЛАТЬ ЭТИ ****** ВРЕМЕННЫЕ ПРОМЕЖУТКИ (КАК ВЫЧЕСТЬ ДАТУ ИЗ ДАТУ И ПОЛУЧИТЬ НАПРИМЕР 1Д 2Ч 45М
+* СПРОСИТЬ КАК ДЕЛАТЬ ЭТИ ****** ВРЕМЕННЫЕ ПРОМЕЖУТКИ (КАК ВЫЧЕСТЬ ДАТУ ИЗ ДАТЫ И ПОЛУЧИТЬ НАПРИМЕР 1Д 2Ч 45М
 *
 *
 *
 * */
 console.log(getDuration());
 
-export const travelPoint = () => ({
+export const travelPointMocks = () => ({
   travelPointTime: getDate(),
-  timeGap : null,
-  duration: null,
-  destination: getDestination(),
-  travelPointType: getPointType(),
-  description: getDescription(),
-  offers: getOffer(),
-  img: `http://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
-  isFavorite: Boolean(getRandomInt(2)),
+  timeGap : 'Время1-Время2',
+  duration : 'n ремени',
+  destination : getDestination(),
+  travelPointType : getPointType(),
+  description : getDescription(),
+  offers : getOffer(),
+  price : getRandomInt(200) + 5,
+  img : `http://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
+  isFavorite : Boolean(getRandomInt(2)),
 });
 
 
