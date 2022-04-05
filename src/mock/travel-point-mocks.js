@@ -8,18 +8,18 @@ const getDestination = () => {
   return cities[getRandomInt(cities.length)];
 };
 
-let getPointType = () => {
+const getPointType = () => {
   const types = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
   return types[getRandomInt(types.length)];
 };
 
 const getOffer = () => {
   const offers = {
-    'offer1': 10,
-    'offer2': 20,
-    'offer3': 30,
-    'offer4': 40,
-    'offer5': 50
+    'Add luggage': 30,
+    'Switch to comfort class': 100,
+    'Add meal': 15,
+    'Choose seats': 5,
+    'Travel bu train': 40
   };
   return Object.entries(offers).filter((x) => getRandomInt(2)?x:null)
     .reduce((obj,cur) => {
@@ -51,6 +51,7 @@ const getChange = () => [getRandomInt(2),getRandomInt(24),getRandomInt(60)];
 const getDuration = () => {
   const gapArr = getChange();
   const newDate = dayjs().add(gapArr[0], 'day').add(gapArr[1], 'hour').add(gapArr[2], 'minute');
+  // eslint-disable-next-line no-debugger
   debugger;
   const alfa = dayjs();
   const beta = alfa.clone();
@@ -76,7 +77,7 @@ export const travelPointMocks = () => ({
   description : getDescription(),
   offers : getOffer(),
   price : getRandomInt(200) + 5,
-  img : `http://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
+  img : () => `https://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
   isFavorite : Boolean(getRandomInt(2)),
 });
 

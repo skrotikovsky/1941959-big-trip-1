@@ -34,9 +34,6 @@ renderTemplate(siteFilterList, HeadNavigation(), RenderPosition.BEFOREEND);
 const headFilters =  siteList.querySelector('.trip-controls__filters');
 renderTemplate(headFilters, HeadFilters(), RenderPosition.BEFOREEND);
 
-const addNewPoint = siteList.querySelector('.trip-events__list');
-renderTemplate(addNewPoint, AddNewPoint(), RenderPosition.BEFOREBEGIN);
-
 const addWithoutDestination = siteList.querySelector('.trip-events__list');
 renderTemplate(addWithoutDestination, AddWithoutDestination(), RenderPosition.BEFOREBEGIN);
 
@@ -49,4 +46,6 @@ console.log(mocki);
 for (const mockiKey of mocki) {
   const travelPoint =  siteList.querySelector('.trip-events__list');
   renderTemplate(travelPoint, TravelPoint(mockiKey), RenderPosition.BEFOREEND);
+  const addNewPoint = siteList.querySelector('.trip-events__list');
+  renderTemplate(addNewPoint, AddNewPoint(mockiKey), RenderPosition.AFTERBEGIN);
 }
