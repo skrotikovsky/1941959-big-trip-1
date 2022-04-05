@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 const getRandomInt = (max) => Math.floor(Math.random() * max);
 
-const getDestination = () => {
+export const getDestination = () => {
   const cities = ['London', 'Moscow', 'Toronto', 'Tokyo'];
   return cities[getRandomInt(cities.length)];
 };
@@ -28,7 +28,7 @@ const getOffer = () => {
     }, {});
 };
 
-const getDescription = () => {
+export const getDescription = () => {
   const types = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     'Cras aliquet varius magna, non porta ligula feugiat eget.',
     'Fusce tristique felis at fermentum pharetra.',
@@ -51,8 +51,6 @@ const getChange = () => [getRandomInt(2),getRandomInt(24),getRandomInt(60)];
 const getDuration = () => {
   const gapArr = getChange();
   const newDate = dayjs().add(gapArr[0], 'day').add(gapArr[1], 'hour').add(gapArr[2], 'minute');
-  // eslint-disable-next-line no-debugger
-  debugger;
   const alfa = dayjs();
   const beta = alfa.clone();
   const delta =  alfa.subtract(beta);
