@@ -1,5 +1,3 @@
-import {template} from '@babel/core';
-
 export const RenderPosition = {
   BEFOREBEGIN : 'beforebegin',
   AFTERBEGIN : 'afterbegin',

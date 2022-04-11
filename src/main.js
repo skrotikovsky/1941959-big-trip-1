@@ -11,10 +11,6 @@ import {travelPoint} from './view/travel-point';
 import {AddNewPointMock} from './mock/add-new-point-mock';
 import {RenderPosition, renderTemplate} from './render';
 
-
-
-
-
 const siteList = document.querySelector('.page-body');
 
 const headInfoContainer =  siteList.querySelector('.trip-main');
