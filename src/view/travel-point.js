@@ -9,14 +9,14 @@ const addOffer = (offer) => (`<li class="event__offer">
 );
 
 const parseOffer = (offers) => {
-  let liElems = ``;
+  let liElems = '';
   for (const elem of Object.entries(offers)) {
     liElems += addOffer(elem);
   }
   return liElems;
 };
 
-export const TravelPoint = (pointData) => (`<li class="trip-events__item">
+export const travelPoint = (pointData) => (`<li class="trip-events__item">
               <div class="event">
                 <time class="event__date" datetime="2019-03-18">MAR 18</time>
                 <div class="event__type">

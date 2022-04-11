@@ -1,7 +1,5 @@
 import dayjs from 'dayjs';
-
-
-const getRandomInt = (max) => Math.floor(Math.random() * max);
+import {getRandomInt} from '../toolUnit';
 
 export const getDestination = () => {
   const cities = ['London', 'Moscow', 'Toronto', 'Tokyo'];
@@ -45,27 +43,17 @@ export const getDescription = () => {
 };
 
 const getDate = () => dayjs().format('D MMM');
-
+/*
 const getChange = () => [getRandomInt(2),getRandomInt(24),getRandomInt(60)];
 
 const getDuration = () => {
   const gapArr = getChange();
-  const newDate = dayjs().add(gapArr[0], 'day').add(gapArr[1], 'hour').add(gapArr[2], 'minute');
   const alfa = dayjs();
   const beta = alfa.clone();
   const delta =  alfa.subtract(beta);
-  //newDate.subtract(dayjs()).format(`hh${'Н '}mm${'М'}`);
-
   return delta.format('hh mm ss');
 };
-/*
-* СПРОСИТЬ КАК ДЕЛАТЬ ЭТИ ****** ВРЕМЕННЫЕ ПРОМЕЖУТКИ (КАК ВЫЧЕСТЬ ДАТУ ИЗ ДАТЫ И ПОЛУЧИТЬ НАПРИМЕР 1Д 2Ч 45М
-*
-*
-*
-* */
-console.log(getDuration());
-
+*/
 export const travelPointMocks = () => ({
   travelPointTime: getDate(),
   timeGap : 'Время1-Время2',

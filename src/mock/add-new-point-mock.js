@@ -1,5 +1,6 @@
 import {getDescription} from './travel-point-mocks.js';
-const getRandomInt = (max) => Math.floor(Math.random() * max);
+import {getRandomInt} from '../toolUnit';
+
 
 export const AddNewPointMock = () => ({
   travelType: ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'],
