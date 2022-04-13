@@ -60,9 +60,9 @@ render(content, new ContentFilters().element, RenderPosition.AFTERBEGIN);
 render(content, new ContentList().element, RenderPosition.BEFOREEND);
 
 const contentList = content.querySelector('.trip-events__list');
-render(contentList, new AddNewPoint(addNewPointMock()).element, RenderPosition.AFTERBEGIN);
+render(contentList, new AddNewPoint(travelPointMocks()).element, RenderPosition.AFTERBEGIN);
 
-render(contentList, new EditPoint(travelPointMocks()).element, RenderPosition.AFTERBEGIN);
+//render(contentList, new EditPoint(travelPointMocks()).element, RenderPosition.AFTERBEGIN);
 const data = Array.from(Array(5),() => travelPointMocks());
 
 for (const keys of data) {
