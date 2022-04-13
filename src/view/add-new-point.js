@@ -1,5 +1,5 @@
 import {creatElement} from '../render';
-import {getRandomInt, offerList} from '../toolUnit';
+import {offerList} from '../toolUnit';
 
 
 const addNewPoint = (pointData) => (`<li class="trip-events__item">
