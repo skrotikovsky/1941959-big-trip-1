@@ -1,22 +1,8 @@
-//import {travelPointMocks} from '/src/mock/travel-point-mocks.js';
-//const pointData = travelPointMocks();
+import {creatElement} from '../render';
+import {offerList} from '../toolUnit';
 
-const addOffer = (offer) => (`<li class="event__offer">
-                    <span class="event__offer-title">${offer[0]}</span>
-                    &plus;&euro;&nbsp;
-                    <span class="event__offer-price">${offer[1]}</span>
-                  </li>`
-);
 
-const parseOffer = (offers) => {
-  let liElems = '';
-  for (const elem of Object.entries(offers)) {
-    liElems += addOffer(elem);
-  }
-  return liElems;
-};
-
-export const travelPoint = (pointData) => (`<li class="trip-events__item">
+const travelPoint = (pointData) => (`<li class="trip-events__item">
               <div class="event">
                 <time class="event__date" datetime="2019-03-18">MAR 18</time>
                 <div class="event__type">
@@ -36,9 +22,13 @@ export const travelPoint = (pointData) => (`<li class="trip-events__item">
                 </p>
                 <h4 class="visually-hidden">Offers:</h4>
                 <ul class="event__selected-offers">
-                  ${parseOffer(pointData.offers)}
+                  ${offerList(pointData, (offer) => (offer.isChecked?`<li class="event__offer">
+                    <span class="event__offer-title">${offer.fullName}</span>
+                    &plus;&euro;&nbsp;
+                    <span class="event__offer-price">${offer.cost}</span>
+                  </li>`:''))}
                 </ul>
-                <button class="event__favorite-btn ${pointData.isFavorite?'event__favorite-btn--active':''}event__favorite-btn--active" type="button">
+                <button class="event__favorite-btn event__favorite-btn--active" type="button">
                   <span class="visually-hidden">Add to favorite</span>
                   <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
                     <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"/>
@@ -50,4 +40,26 @@ export const travelPoint = (pointData) => (`<li class="trip-events__item">
               </div>
             </li>`);
 
+export default class TravelPoint {
+  #pointData;
+  #element = null;
+  constructor(pointData) {
+    this.#pointData = pointData;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = creatElement(this.template);
+    }
+    return this.#element;
+  }
+
+  get template() {
+    return travelPoint(this.#pointData);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
 

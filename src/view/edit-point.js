@@ -1,12 +1,14 @@
 import {creatElement} from '../render';
+import {offerList} from '../toolUnit';
 
-export const addWithoutOffers = () => (`<li class="trip-events__item">
+
+const editPoint = (pointData) => (`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
                   <div class="event__type-wrapper">
                     <label class="event__type  event__type-btn" for="event-type-toggle-1">
                       <span class="visually-hidden">Choose event type</span>
-                      <img class="event__type-icon" width="17" height="17" src="img/icons/bus.png" alt="Event type icon">
+                      <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
                     </label>
                     <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -20,7 +22,7 @@ export const addWithoutOffers = () => (`<li class="trip-events__item">
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus" checked>
+                          <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus">
                           <label class="event__type-label  event__type-label--bus" for="event-type-bus-1">Bus</label>
                         </div>
 
@@ -40,7 +42,7 @@ export const addWithoutOffers = () => (`<li class="trip-events__item">
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight">
+                          <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight" checked>
                           <label class="event__type-label  event__type-label--flight" for="event-type-flight-1">Flight</label>
                         </div>
 
@@ -64,9 +66,9 @@ export const addWithoutOffers = () => (`<li class="trip-events__item">
 
                   <div class="event__field-group  event__field-group--destination">
                     <label class="event__label  event__type-output" for="event-destination-1">
-                      Bus
+                      ${pointData.travelPointType}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${pointData.destination}" list="destination-list-1">
                     <datalist id="destination-list-1">
                       <option value="Amsterdam"></option>
                       <option value="Geneva"></option>
@@ -76,10 +78,10 @@ export const addWithoutOffers = () => (`<li class="trip-events__item">
 
                   <div class="event__field-group  event__field-group--time">
                     <label class="visually-hidden" for="event-start-time-1">From</label>
-                    <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="19/03/19 00:00">
+                    <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 12:25">
                     &mdash;
                     <label class="visually-hidden" for="event-end-time-1">To</label>
-                    <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="19/03/19 00:00">
+                    <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 13:35">
                   </div>
 
                   <div class="event__field-group  event__field-group--price">
@@ -87,34 +89,48 @@ export const addWithoutOffers = () => (`<li class="trip-events__item">
                       <span class="visually-hidden">Price</span>
                       &euro;
                     </label>
-                    <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="">
+                    <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${pointData.price}">
                   </div>
 
                   <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-                  <button class="event__reset-btn" type="reset">Cancel</button>
+                  <button class="event__reset-btn" type="reset">Delete</button>
+                  <button class="event__rollup-btn" type="button">
+                    <span class="visually-hidden">Open event</span>
+                  </button>
                 </header>
-
                 <section class="event__details">
+                  <section class="event__section  event__section--offers">
+                    <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+
+                    <div class="event__available-offers">
+                      ${offerList(pointData, (offer, index) => (`<div class="event__offer-selector">
+                        <input class="event__offer-checkbox  visually-hidden" id="${index}_${offer.id}" type="checkbox" name="${index}_${offer.id}" ${offer.isChecked?'checked':''}>
+                        <label class="event__offer-label" for="${index}_${offer.id}">
+                          <span class="event__offer-title">${offer.fullName}</span>
+                          &plus;&euro;&nbsp;
+                          <span class="event__offer-price">${offer.cost}</span>
+                        </label>
+                      </div>`))}
+                    </div>
+                  </section>
+
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">Geneva is a city in Switzerland that lies at the southern tip of expansive Lac Léman (Lake Geneva). Surrounded by the Alps and Jura mountains, the city has views of dramatic Mont Blanc.</p>
-
-                    <div class="event__photos-container">
-                      <div class="event__photos-tape">
-                        <img class="event__photo" src="img/photos/1.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/2.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/3.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/4.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/5.jpg" alt="Event photo">
-                      </div>
-                    </div>
+                    <p class="event__destination-description">${pointData.description}</p>
                   </section>
                 </section>
               </form>
-            </li>`);
+            </li>`
+);
 
-export default class AddWithoutOffers {
+export default class EditPoint {
   #element = null;
+  #pointData;
+  constructor(pointData) {
+    this.#pointData = pointData;
+  }
+
+
   get element() {
     if (!this.#element) {
       this.#element = creatElement(this.template);
@@ -123,7 +139,7 @@ export default class AddWithoutOffers {
   }
 
   get template() {
-    return addWithoutOffers();
+    return editPoint(this.#pointData);
   }
 
   removeElement() {

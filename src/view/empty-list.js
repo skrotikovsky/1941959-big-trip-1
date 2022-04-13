@@ -1,9 +1,8 @@
 import {creatElement} from '../render';
 
-const contentList = () => (`<ul class="trip-events__list">
-          </ul>`);
+const drawEmptyList = () => '<p class="trip-events__msg">Click New Event to create your first point</p>';
 
-export default class ContentList {
+export default class EmptyList{
   #element = null;
   get element() {
     if (!this.#element) {
@@ -13,7 +12,7 @@ export default class ContentList {
   }
 
   get template() {
-    return contentList();
+    return drawEmptyList();
   }
 
   removeElement() {

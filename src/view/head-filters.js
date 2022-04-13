@@ -1,4 +1,7 @@
-export const headFilters = () => (`<form class="trip-filters" action="#" method="get">
+import {creatElement} from '../render';
+
+
+const headFilters = () => (`<form class="trip-filters" action="#" method="get">
                 <div class="trip-filters__filter">
                   <input id="filter-everything" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="everything" checked>
                   <label class="trip-filters__filter-label" for="filter-everything">Everything</label>
@@ -16,3 +19,21 @@ export const headFilters = () => (`<form class="trip-filters" action="#" method=
 
                 <button class="visually-hidden" type="submit">Accept filter</button>
               </form>`);
+
+export default class HeadFilters {
+  #element = null;
+  get element() {
+    if (!this.#element) {
+      this.#element = creatElement(this.template);
+    }
+    return this.#element;
+  }
+
+  get template() {
+    return headFilters();
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

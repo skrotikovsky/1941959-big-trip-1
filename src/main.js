@@ -1,43 +1,73 @@
-//import {ContentList} from './view/content-list.js';
-import {contentFilters} from './view/content-filters.js';
-import {headNavigation} from './view/head-navigation.js';
-import {headFilters} from './view/head-filters.js';
-import {headInfo} from './view/head-info.js';
-import {addNewPoint} from './view/add-new-point.js';
-//import {AddWithoutDestination} from './view/add-without-destination.js';
-//import {AddWithoutOffers} from './view/add-without-offers.js';
+import ContentFilters from './view/content-filters.js';
+import HeadNavigation from './view/head-navigation.js';
+import HeadFilters from './view/head-filters.js';
+import HeadInfo from './view/head-info.js';
+import AddNewPoint from './view/add-new-point.js';
+import TravelPoint from './view/travel-point';
 import {travelPointMocks} from './mock/travel-point-mocks.js';
-import {travelPoint} from './view/travel-point';
-import {AddNewPointMock} from './mock/add-new-point-mock';
-import {RenderPosition, renderTemplate} from './render';
+import {addNewPointMock} from './mock/add-new-point-mock';
+import {render, RenderPosition} from './render';
+import ContentList from './view/content-list';
+import EditPoint from './view/edit-point';
+import EmptyList from './view/empty-list';
 
-const siteList = document.querySelector('.page-body');
+const mainMenu = document.querySelector('.trip-main');
+const mainMenuControls = mainMenu.querySelector('.trip-main__trip-controls');
 
-const headInfoContainer =  siteList.querySelector('.trip-main');
-renderTemplate(headInfoContainer, headInfo(), RenderPosition.AFTERBEGIN);
+const renderTravelPoint = (travelPoint, pointData) => {
+  const travelPointComponent = new TravelPoint(pointData);
+  const travelPointEditor = new EditPoint(pointData);
+  const replacePointToEdit = () => {
+    travelPoint.replaceChild(travelPointEditor.element, travelPointComponent.element);
+  };
+  const replaceEditToPoint = () => {
+    travelPoint.replaceChild(travelPointComponent.element, travelPointEditor.element);
+  };
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      replaceEditToPoint();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
+  };
 
-const contentFilter =  siteList.querySelector('.trip-events');
-renderTemplate(contentFilter, contentFilters(), RenderPosition.AFTERBEGIN);
+  const onMouseClickDown = () => {
+    replacePointToEdit();
+  };
+  const onMouseClickUp = () => {
+    replaceEditToPoint();
+  };
+  travelPointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    onMouseClickDown();
+    document.addEventListener('keydown', onEscKeyDown);
+  });
+  travelPointEditor.element.querySelector('.event__rollup-btn').addEventListener('click', () => onMouseClickUp());
+  travelPointEditor.element.querySelector('form').addEventListener('submit',(evt) => {
+    onMouseClickUp();
+    evt.preventDefault();
+    replaceEditToPoint();
+    document.removeEventListener('keydown', onEscKeyDown);
+  });
+  render(travelPoint, travelPointComponent.element, RenderPosition.BEFOREEND);
+};
 
-const siteFilterList = siteList.querySelector('.trip-controls__navigation');
-renderTemplate(siteFilterList, headNavigation(), RenderPosition.BEFOREEND);
+render(mainMenu, new HeadInfo().element, RenderPosition.AFTERBEGIN);
+render(mainMenuControls, new HeadNavigation().element, RenderPosition.AFTERBEGIN);
+render(mainMenuControls, new HeadFilters().element, RenderPosition.AFTERBEGIN);
 
-const headFiltersContainer =  siteList.querySelector('.trip-controls__filters');
-renderTemplate(headFiltersContainer, headFilters(), RenderPosition.BEFOREEND);
+const content = document.querySelector('.trip-events');
+render(content, new ContentFilters().element, RenderPosition.AFTERBEGIN);
+render(content, new ContentList().element, RenderPosition.BEFOREEND);
 
-//const addWithoutDestination = siteList.querySelector('.trip-events__list');
-//renderTemplate(addWithoutDestination, AddWithoutDestination(), RenderPosition.BEFOREBEGIN);
+const contentList = content.querySelector('.trip-events__list');
+render(contentList, new AddNewPoint(addNewPointMock()).element, RenderPosition.AFTERBEGIN);
 
-//const addWithoutOffers = siteList.querySelector('.trip-events__list');
-//renderTemplate(addWithoutOffers, AddWithoutOffers(), RenderPosition.BEFOREBEGIN);
+render(contentList, new EditPoint(travelPointMocks()).element, RenderPosition.AFTERBEGIN);
+const data = Array.from(Array(5),() => travelPointMocks());
 
-const mocki = Array.from(Array(5),() => travelPointMocks());
-
-const addNewPointContainer = siteList.querySelector('.trip-events__list');
-renderTemplate(addNewPointContainer, addNewPoint(AddNewPointMock()), RenderPosition.AFTERBEGIN);
-
-for (const mockiKey of mocki) {
-  const travelPointContainer =  siteList.querySelector('.trip-events__list');
-  renderTemplate(travelPointContainer, travelPoint(mockiKey), RenderPosition.BEFOREEND);
-
+for (const keys of data) {
+  renderTravelPoint(contentList, keys);
+}
+if (contentList.children.length === 0) {
+  render(content, new EmptyList().element ,RenderPosition.BEFOREEND);
 }

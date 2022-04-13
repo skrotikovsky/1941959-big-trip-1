@@ -1,31 +1,8 @@
-/*const compareValues = (nodeLabel, moski) => {
-  const inputToCheckID = nodeLabel.getAttribute('value') === moski.travelPointType()?nodeLabel.getAttribute('for'):'';
-  if (inputToCheckID !== '') {
-    addPointValue.querySelector(`#${inputToCheckID}`).setAttribute('checked');
-  }
-};
-*/
-// import {travelPointMocks} from '../mock/travel-point-mocks';
-const getRandomInt = (max) => Math.floor(Math.random() * max);
-const createOffer = (offerName, offerData, isOfferChecked) => (`<div class="event__offer-selector">
-                        <input class="event__offer-checkbox  visually-hidden" id="${offerData['id']}" type="checkbox" name="event-offer-meal" ${isOfferChecked?'checked':''}>
-                        <label class="event__offer-label" for="${offerData['id']}">
-                          <span class="event__offer-title">${offerName}</span>
-                          &plus;&euro;&nbsp;
-                          <span class="event__offer-price">${offerData['cost']}</span>
-                        </label>
-                      </div>`);
+import {creatElement} from '../render';
+import {getRandomInt, offerList} from '../toolUnit';
 
-const offerList = (pointData) => {
-  let listOfOffers = '';
-  for (let i =0; i<Object.keys(pointData.offers).length ; i++) {
-    const offerName = Object.keys(pointData.offers)[i];
-    listOfOffers += createOffer(offerName, pointData.offers[offerName], pointData.offersCheck[i]);
-  }
-  return listOfOffers;
-};
 
-export const addNewPoint = (pointData) => (`<li class="trip-events__item">
+const addNewPoint = (pointData) => (`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
                   <div class="event__type-wrapper">
@@ -122,7 +99,14 @@ export const addNewPoint = (pointData) => (`<li class="trip-events__item">
                   <section class="event__section  event__section--offers">
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
                     <div class="event__available-offers">
-                        ${offerList(pointData)}
+                        ${offerList(pointData, (offer, index) => (`<div class="event__offer-selector">
+                        <input class="event__offer-checkbox  visually-hidden" id="${index}_${offer.id}" type="checkbox" name="event-offer-meal" ${offer.isChecked?'checked':''}>
+                        <label class="event__offer-label" for="${index}_${offer.id}">
+                          <span class="event__offer-title">${offer.fullName}</span>
+                          &plus;&euro;&nbsp;
+                          <span class="event__offer-price">${offer.cost}</span>
+                        </label>
+                      </div>`))}
                     </div>
                   </section>
 
@@ -143,3 +127,26 @@ export const addNewPoint = (pointData) => (`<li class="trip-events__item">
                 </section>
               </form>
             </li>`);
+
+export default class AddNewPoint {
+  #pointData;
+  #element = null;
+  constructor(pointData) {
+    this.#pointData = pointData;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = creatElement(this.template);
+    }
+    return this.#element;
+  }
+
+  get template() {
+    return addNewPoint(this.#pointData);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

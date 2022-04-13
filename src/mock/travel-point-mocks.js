@@ -11,20 +11,13 @@ const getPointType = () => {
   return types[getRandomInt(types.length)];
 };
 
-const getOffer = () => {
-  const offers = {
-    'Add luggage': 30,
-    'Switch to comfort class': 100,
-    'Add meal': 15,
-    'Choose seats': 5,
-    'Travel bu train': 40
-  };
-  return Object.entries(offers).filter((x) => getRandomInt(2)?x:null)
-    .reduce((obj,cur) => {
-      obj[cur[0]] = cur[1];
-      return obj;
-    }, {});
-};
+const getOffer = () => ({
+  offer1 : {id: 'offer1', cost: 'cost1', isChecked: Boolean(getRandomInt(2)), fullName: 'Add luggage'},
+  offer2 : {id: 'offer2', cost: 'cost2', isChecked: Boolean(getRandomInt(2)), fullName: 'Switch to comfort'},
+  offer3 : {id: 'offer3', cost: 'cost3', isChecked: Boolean(getRandomInt(2)), fullName: 'Add meal'},
+  offer4 : {id: 'offer4', cost: 'cost4', isChecked: Boolean(getRandomInt(2)), fullName: 'Choose seats'},
+  offer5 : {id: 'offer5', cost: 'cost5', isChecked: Boolean(getRandomInt(2)), fullName: 'Travel by train'}}
+);
 
 export const getDescription = () => {
   const types = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -56,12 +49,12 @@ const getDuration = () => {
 */
 export const travelPointMocks = () => ({
   travelPointTime: getDate(),
-  timeGap : 'Время1-Время2',
-  duration : 'n ремени',
+  timeGap : `${getRandomInt(12)+1}-${getRandomInt(24) + 12}`,
+  duration : `${getRandomInt(12)}`,
   destination : getDestination(),
   travelPointType : getPointType(),
   description : getDescription(),
-  offers : getOffer(),
+  offers: getOffer(),
   price : getRandomInt(200) + 5,
   img : () => `https://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
   isFavorite : Boolean(getRandomInt(2)),
