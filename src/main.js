@@ -5,7 +5,6 @@ import HeadInfo from './view/head-info.js';
 import AddNewPoint from './view/add-new-point.js';
 import TravelPoint from './view/travel-point';
 import {travelPointMocks} from './mock/travel-point-mocks.js';
-import {addNewPointMock} from './mock/add-new-point-mock';
 import {render, RenderPosition} from './render';
 import ContentList from './view/content-list';
 import EditPoint from './view/edit-point';
