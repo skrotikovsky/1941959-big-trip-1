@@ -1,22 +1,10 @@
-import {creatElement} from '../render';
+import AbstractComponentClass from './abstract-component-class';
 
 const contentList = () => (`<ul class="trip-events__list">
           </ul>`);
 
-export default class ContentList {
-  #element = null;
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
-  }
-
+export default class ContentList extends AbstractComponentClass{
   get template() {
     return contentList();
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

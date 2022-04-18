@@ -1,4 +1,4 @@
-import {creatElement} from '../render';
+import AbstractComponentClass from './abstract-component-class';
 
 const headInfo = () => (`<section class="trip-main__trip-info  trip-info">
             <div class="trip-info__main">
@@ -12,20 +12,8 @@ const headInfo = () => (`<section class="trip-main__trip-info  trip-info">
             </p>
           </section>`);
 
-export default class HeadInfo {
-  #element = null;
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
-  }
-
+export default class HeadInfo extends AbstractComponentClass{
   get template() {
     return headInfo();
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

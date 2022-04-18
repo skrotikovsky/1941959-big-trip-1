@@ -1,4 +1,4 @@
-import {creatElement} from '../render';
+import AbstractComponentClass from './abstract-component-class';
 
 const addWithoutDestination = () => (`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
@@ -148,20 +148,8 @@ const addWithoutDestination = () => (`<li class="trip-events__item">
               </form>
             </li>`);
 
-export default class AddWithoutDestination {
-  #element = null;
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
-  }
-
+export default class AddWithoutDestination extends AbstractComponentClass{
   get template() {
     return addWithoutDestination();
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

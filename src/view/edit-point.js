@@ -1,6 +1,4 @@
-import {creatElement} from '../render';
-import {offerList} from '../toolUnit';
-
+import AbstractComponentClass from './abstract-component-class';
 
 const editPoint = (pointData) => (`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
@@ -123,26 +121,30 @@ const editPoint = (pointData) => (`<li class="trip-events__item">
             </li>`
 );
 
-export default class EditPoint {
-  #element = null;
-  #pointData;
+export default class EditPoint extends AbstractComponentClass{
+  #pointData = null;
   constructor(pointData) {
+    super();
     this.#pointData = pointData;
   }
 
+  setClickPointHandler = (callback) => {
+    this._callback.downClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#clickPointHandler);
+    this.element.querySelector('form').addEventListener('submit', this.#submitFormHandler);
+  }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
+  #clickPointHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.downClick();
+  }
+
+  #submitFormHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.downClick();
   }
 
   get template() {
     return editPoint(this.#pointData);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

@@ -1,3 +1,5 @@
+import AbstractComponentClass from './view/abstract-component-class';
+
 export const RenderPosition = {
   BEFOREBEGIN : 'beforebegin',
   AFTERBEGIN : 'afterbegin',
@@ -7,20 +9,46 @@ export const RenderPosition = {
 
 
 export const  render = (container, element, place) => {
+  const parent = container instanceof AbstractComponentClass? container.element: container;
+  const child = element instanceof AbstractComponentClass? element.element: element;
   switch (place) {
     case RenderPosition.BEFOREBEGIN:
-      container.before(element);
+      parent.before(child);
       break;
     case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
+      parent.prepend(child);
       break;
     case RenderPosition.BEFOREEND:
-      container.append(element);
+      parent.append(child);
       break;
     case RenderPosition.AFTEREND:
-      container.after(element);
+      parent.after(child);
       break;
   }
+};
+
+export const replace = (newElement, oldElement) => {
+  if (newElement === null || oldElement === null) {
+    throw new Error('Can\'t replace unexciting elements');
+  }
+  const newChild = newElement instanceof AbstractComponentClass? newElement.element: newElement;
+  const oldChild = newElement instanceof AbstractComponentClass? oldElement.element: oldElement;
+  const parent = oldChild.parentElement;
+  if (parent === null) {
+    throw new Error('Parent element doesn\'t exist');
+  }
+  parent.replaceChild(newChild, oldChild);
+};
+
+const remove = (component) => {
+  if (component === null) {
+    return;
+  }
+  if (!(component instanceof AbstractComponentClass)){
+    throw new Error('Can remove only components');
+  }
+  component.element.remove();
+  component.removeElement();
 };
 
 export const creatElement = (template) => {
@@ -28,3 +56,4 @@ export const creatElement = (template) => {
   newElement.innerHTML = template;
   return newElement.firstChild;
 };
+

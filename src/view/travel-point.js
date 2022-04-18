@@ -1,6 +1,5 @@
-import {creatElement} from '../render';
 import {offerList} from '../toolUnit';
-
+import AbstractComponentClass from './abstract-component-class';
 
 const travelPoint = (pointData) => (`<li class="trip-events__item">
               <div class="event">
@@ -40,26 +39,25 @@ const travelPoint = (pointData) => (`<li class="trip-events__item">
               </div>
             </li>`);
 
-export default class TravelPoint {
-  #pointData;
-  #element = null;
+export default class TravelPoint extends AbstractComponentClass{
+  #pointData = null;
   constructor(pointData) {
+    super();
     this.#pointData = pointData;
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
+  setClickPointHandler = (callback) => {
+    this._callback.downClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#clickPointHandler);
+  }
+
+  #clickPointHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.downClick();
   }
 
   get template() {
     return travelPoint(this.#pointData);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
 

@@ -1,4 +1,4 @@
-import {creatElement} from '../render';
+import AbstractComponentClass from './abstract-component-class';
 
 
 const headFilters = () => (`<form class="trip-filters" action="#" method="get">
@@ -20,20 +20,8 @@ const headFilters = () => (`<form class="trip-filters" action="#" method="get">
                 <button class="visually-hidden" type="submit">Accept filter</button>
               </form>`);
 
-export default class HeadFilters {
-  #element = null;
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
-  }
-
+export default class HeadFilters extends AbstractComponentClass{
   get template() {
     return headFilters();
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

@@ -1,4 +1,4 @@
-import {creatElement} from '../render';
+import AbstractComponentClass from './abstract-component-class';
 
 export const contentFilters = () => (`<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
             <div class="trip-sort__item  trip-sort__item--day">
@@ -27,20 +27,8 @@ export const contentFilters = () => (`<form class="trip-events__trip-sort  trip-
             </div>
           </form>`);
 
-export default class ContentFilters {
-  #element = null;
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
-  }
-
+export default class ContentFilters extends AbstractComponentClass{
   get template() {
     return contentFilters();
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

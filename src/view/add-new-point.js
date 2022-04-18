@@ -1,5 +1,5 @@
-import {creatElement} from '../render';
 import {offerList} from '../toolUnit';
+import AbstractComponentClass from './abstract-component-class';
 
 
 const addNewPoint = (pointData) => (`<li class="trip-events__item">
@@ -128,25 +128,15 @@ const addNewPoint = (pointData) => (`<li class="trip-events__item">
               </form>
             </li>`);
 
-export default class AddNewPoint {
-  #pointData;
-  #element = null;
+export default class AddNewPoint extends AbstractComponentClass{
+  #pointData = null;
   constructor(pointData) {
+    super();
     this.#pointData = pointData;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = creatElement(this.template);
-    }
-    return this.#element;
   }
 
   get template() {
     return addNewPoint(this.#pointData);
   }
 
-  removeElement() {
-    this.#element = null;
-  }
 }
