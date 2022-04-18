@@ -40,7 +40,7 @@ export const replace = (newElement, oldElement) => {
   parent.replaceChild(newChild, oldChild);
 };
 
-const remove = (component) => {
+export const remove = (component) => {
   if (component === null) {
     return;
   }

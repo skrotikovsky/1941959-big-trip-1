@@ -1,4 +1,5 @@
 import AbstractComponentClass from './abstract-component-class';
+import {offerList} from '../toolUnit';
 
 const editPoint = (pointData) => (`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
