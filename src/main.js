@@ -9,10 +9,17 @@ import {render, RenderPosition, replace} from './render';
 import ContentList from './view/content-list';
 import EditPoint from './view/edit-point';
 import EmptyList from './view/empty-list';
-
+import BoardPresenter from './presenter/board-presenter';
 const mainMenu = document.querySelector('.trip-main');
 const mainMenuControls = mainMenu.querySelector('.trip-main__trip-controls');
+const content = document.querySelector('.trip-events');
+const contentList = content.querySelector('.trip-events__list');
+const filtersContainer = document.querySelector('.trip-controls__filters');
+const data = Array.from(Array(5),() => travelPointMocks());
+const presenter = new BoardPresenter(mainMenuControls, content, filtersContainer);
+presenter.init(data);
 
+/*
 const renderTravelPoint = (travelPoint, pointData) => {
   const travelPointComponent = new TravelPoint(pointData);
   const travelPointEditor = new EditPoint(pointData);
@@ -51,14 +58,14 @@ render(mainMenu, new HeadInfo(), RenderPosition.AFTERBEGIN);
 render(mainMenuControls, new HeadNavigation(), RenderPosition.AFTERBEGIN);
 render(mainMenuControls, new HeadFilters(), RenderPosition.AFTERBEGIN);
 
-const content = document.querySelector('.trip-events');
+
 render(content, new ContentFilters(), RenderPosition.AFTERBEGIN);
 render(content, new ContentList(), RenderPosition.BEFOREEND);
 
-const contentList = content.querySelector('.trip-events__list');
+
 render(contentList, new AddNewPoint(travelPointMocks()), RenderPosition.AFTERBEGIN);
 
-const data = Array.from(Array(5),() => travelPointMocks());
+;
 
 for (const keys of data) {
   renderTravelPoint(contentList, keys);
@@ -66,3 +73,4 @@ for (const keys of data) {
 if (contentList.children.length === 0) {
   render(content, new EmptyList() ,RenderPosition.BEFOREEND);
 }
+*/
