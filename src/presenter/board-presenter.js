@@ -3,9 +3,7 @@ import HeadInfo from '../view/head-info';
 import HeadNavigation from '../view/head-navigation';
 import ContentFilters from '../view/content-filters';
 import ContentList from '../view/content-list';
-import {render, RenderPosition, replace} from '../render';
-import TravelPoint from '../view/travel-point';
-import EditPoint from '../view/edit-point';
+import {render, RenderPosition} from '../render';
 import EmptyList from '../view/empty-list';
 import TravelPointPresenter from './travel-point-presenter';
 
@@ -34,6 +32,7 @@ export default class BoardPresenter {
     this._renderContentFilters();
     this._renderContentList();
     this._renderPointList();
+    this._renderEmptyList();
   }
 
   _renderPointList = () => {
@@ -65,6 +64,8 @@ export default class BoardPresenter {
   }
 
   _renderEmptyList = () => {
-    render(this.#contentContainer, this.#contentEmpty, RenderPosition.AFTERBEGIN);
+    if (this.#contentList.element.firstChild === null) {
+      render(this.#contentContainer, this.#contentEmpty, RenderPosition.BEFOREEND);
+    }
   }
 }
