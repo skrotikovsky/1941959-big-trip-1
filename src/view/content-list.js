@@ -1,4 +1,4 @@
-export const ContentList = () => (`<ul class="trip-events__list">
+export const contentList = () => (`<ul class="trip-events__list">
             <li class="trip-events__item">
               <div class="event">
                 <time class="event__date" datetime="2019-03-18">MAR 18</time>

@@ -1,35 +1,32 @@
 import dayjs from 'dayjs';
+import {getRandomInt} from '../toolUnit';
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
-function getDestination() {
+export const getDestination = () => {
   const cities = ['London', 'Moscow', 'Toronto', 'Tokyo'];
   return cities[getRandomInt(cities.length)];
-}
+};
 
-function getPointType() {
+const getPointType = () => {
   const types = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
   return types[getRandomInt(types.length)];
-}
+};
 
-function getOffer() {
+const getOffer = () => {
   const offers = {
-    'offer1': 10,
-    'offer2': 20,
-    'offer3': 30,
-    'offer4': 40,
-    'offer5': 50
+    'Add luggage': 30,
+    'Switch to comfort class': 100,
+    'Add meal': 15,
+    'Choose seats': 5,
+    'Travel bu train': 40
   };
   return Object.entries(offers).filter((x) => getRandomInt(2)?x:null)
     .reduce((obj,cur) => {
       obj[cur[0]] = cur[1];
       return obj;
     }, {});
-}
+};
 
-function getDescription() {
+export const getDescription = () => {
   const types = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     'Cras aliquet varius magna, non porta ligula feugiat eget.',
     'Fusce tristique felis at fermentum pharetra.',
@@ -43,27 +40,31 @@ function getDescription() {
   return types.filter((x) => getRandomInt(2)?x:null)
     .reduce((obj, cur)=>
       `${obj + cur  }\n`,'');
-}
+};
 
-function getDate() {
-  return dayjs().format('D MMM');
-}
-console.log(getDate());
+const getDate = () => dayjs().format('D MMM');
+/*
+const getChange = () => [getRandomInt(2),getRandomInt(24),getRandomInt(60)];
 
-function getDuration() {
-  const dateDuration = getDate();
-//  console.log(newDate);
-}
-
-const travelPoint =() => ({
-  travelPointTime: null,
-  duration: null,
-  destination: getDestination(),
-  travelPointType: getPointType(),
-  description: getDescription(),
-  offers: getOffer(),
-  img: `http://picsum.photos/248/152?r=${toString(getRandomInt(1000))}`,
-  isFavorite: Boolean(getRandomInt(2)),
+const getDuration = () => {
+  const gapArr = getChange();
+  const alfa = dayjs();
+  const beta = alfa.clone();
+  const delta =  alfa.subtract(beta);
+  return delta.format('hh mm ss');
+};
+*/
+export const travelPointMocks = () => ({
+  travelPointTime: getDate(),
+  timeGap : 'Время1-Время2',
+  duration : 'n ремени',
+  destination : getDestination(),
+  travelPointType : getPointType(),
+  description : getDescription(),
+  offers : getOffer(),
+  price : getRandomInt(200) + 5,
+  img : () => `https://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
+  isFavorite : Boolean(getRandomInt(2)),
 });
 
 
