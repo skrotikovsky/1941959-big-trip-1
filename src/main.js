@@ -1,43 +1,52 @@
-//import {ContentList} from './view/content-list.js';
-import {contentFilters} from './view/content-filters.js';
-import {headNavigation} from './view/head-navigation.js';
-import {headFilters} from './view/head-filters.js';
-import {headInfo} from './view/head-info.js';
-import {addNewPoint} from './view/add-new-point.js';
-//import {AddWithoutDestination} from './view/add-without-destination.js';
-//import {AddWithoutOffers} from './view/add-without-offers.js';
-import {travelPointMocks} from './mock/travel-point-mocks.js';
-import {travelPoint} from './view/travel-point';
-import {AddNewPointMock} from './mock/add-new-point-mock';
-import {RenderPosition, renderTemplate} from './render';
+import {ContentList} from './view/content-list.js';
+import {ContentFilters} from './view/content-filters.js';
+import {HeadNavigation} from './view/head-navigation.js';
+import {HeadFilters} from './view/head-filters.js';
+import {HeadInfo} from './view/head-info.js';
+import {AddNewPoint} from './view/add-new-point.js';
+import {AddWithoutDestination} from './view/add-without-destination.js';
+import {AddWithoutOffers} from './view/add-without-offers.js';
+
+const RenderPosition = {
+  BEFOREBEGIN : 'beforebegin',
+  AFTERBEGIN : 'afterbegin',
+  BEFOREEND : 'beforeend',
+  AFTEREND : 'afterend',
+};
+
+const renderTemplate = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
+};
 
 const siteList = document.querySelector('.page-body');
 
-const headInfoContainer =  siteList.querySelector('.trip-main');
-renderTemplate(headInfoContainer, headInfo(), RenderPosition.AFTERBEGIN);
+const headInfo =  document.querySelector('.trip-main');
+renderTemplate(headInfo, HeadInfo(), RenderPosition.AFTERBEGIN);
 
-const contentFilter =  siteList.querySelector('.trip-events');
-renderTemplate(contentFilter, contentFilters(), RenderPosition.AFTERBEGIN);
+const contentFilter =  document.querySelector('.trip-events');
+renderTemplate(contentFilter, ContentFilters(), RenderPosition.AFTERBEGIN);
+
+const contentList =  document.querySelector('.trip-events');
+renderTemplate(contentList, ContentList(), RenderPosition.BEFOREEND);
 
 const siteFilterList = siteList.querySelector('.trip-controls__navigation');
-renderTemplate(siteFilterList, headNavigation(), RenderPosition.BEFOREEND);
+renderTemplate(siteFilterList, HeadNavigation(), RenderPosition.BEFOREEND);
 
-const headFiltersContainer =  siteList.querySelector('.trip-controls__filters');
-renderTemplate(headFiltersContainer, headFilters(), RenderPosition.BEFOREEND);
+const headFilters =  document.querySelector('.trip-controls__filters');
+renderTemplate(headFilters, HeadFilters(), RenderPosition.BEFOREEND);
 
-//const addWithoutDestination = siteList.querySelector('.trip-events__list');
-//renderTemplate(addWithoutDestination, AddWithoutDestination(), RenderPosition.BEFOREBEGIN);
+const addNewPoint = siteList.querySelector('.trip-events__list');
+renderTemplate(addNewPoint, AddNewPoint(), RenderPosition.BEFOREBEGIN);
 
-//const addWithoutOffers = siteList.querySelector('.trip-events__list');
-//renderTemplate(addWithoutOffers, AddWithoutOffers(), RenderPosition.BEFOREBEGIN);
+const addWithoutDestination = siteList.querySelector('.trip-events__list');
+renderTemplate(addWithoutDestination, AddWithoutDestination(), RenderPosition.BEFOREBEGIN);
 
-const mocki = Array.from(Array(5),() => travelPointMocks());
+const addWithoutOffers = siteList.querySelector('.trip-events__list');
+renderTemplate(addWithoutOffers, AddWithoutOffers(), RenderPosition.BEFOREBEGIN);
 
-const addNewPointContainer = siteList.querySelector('.trip-events__list');
-renderTemplate(addNewPointContainer, addNewPoint(AddNewPointMock()), RenderPosition.AFTERBEGIN);
-
-for (const mockiKey of mocki) {
-  const travelPointContainer =  siteList.querySelector('.trip-events__list');
-  renderTemplate(travelPointContainer, travelPoint(mockiKey), RenderPosition.BEFOREEND);
-
-}
+//const addEventBtn = document.querySelector('.trip-main__event-add-btn');
+//const addNewPoint = siteList.querySelector('.trip-events__list');
+//addEventBtn.addEventListener('click', () => {
+//  renderTemplate(addNewPoint, AddNewPoint(), RenderPosition.BEFOREBEGIN);
+//  addEventBtn.style.disabled = true;
+//});
