@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import {getRandomInt} from '../toolUnit';
+import {nanoid} from 'nanoid';
 
 export const getDestination = () => {
   const cities = ['London', 'Moscow', 'Toronto', 'Tokyo'];
@@ -58,6 +59,7 @@ export const travelPointMocks = () => ({
   price : getRandomInt(200) + 5,
   img : () => `https://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
   isFavorite : Boolean(getRandomInt(2)),
+  pointId : nanoid(),
 });
 
 

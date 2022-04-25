@@ -103,7 +103,7 @@ const editPoint = (pointData) => (`<li class="trip-events__item">
 
                     <div class="event__available-offers">
                       ${offerList(pointData, (offer, index) => (`<div class="event__offer-selector">
-                        <input class="event__offer-checkbox  visually-hidden" id="${index}_${offer.id}" type="checkbox" name="${index}_${offer.id}" ${offer.isChecked?'checked':''}>
+                        <input class="event__offer-checkbox  visually-hidden" id="${index}_${offer.id}_" type="checkbox" name="${index}_${offer.id}" ${offer.isChecked?'checked':''}>
                         <label class="event__offer-label" for="${index}_${offer.id}">
                           <span class="event__offer-title">${offer.fullName}</span>
                           &plus;&euro;&nbsp;

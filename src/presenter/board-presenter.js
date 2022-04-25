@@ -6,6 +6,7 @@ import ContentList from '../view/content-list';
 import {render, RenderPosition} from '../render';
 import EmptyList from '../view/empty-list';
 import TravelPointPresenter from './travel-point-presenter';
+import {updateItem} from '../toolUnit';
 
 export default class BoardPresenter {
   #contentContainer = null;
@@ -20,6 +21,7 @@ export default class BoardPresenter {
   #travelPoints = [];
 
   constructor(menuContainer, contentContainer, filtersContainer) {
+    this._pointPresenter = new Map();
     this.#menuContainer = menuContainer;
     this.#contentContainer = contentContainer;
     this.#filtersContainer = filtersContainer;
@@ -37,9 +39,14 @@ export default class BoardPresenter {
 
   _renderPointList = () => {
     for (const mock of this.#travelPoints) {
-      const travelPoint = new TravelPointPresenter(this.#contentList);
-      travelPoint.init(mock);
+      this._renderPoint(mock);
     }
+  }
+
+  _renderPoint = (mock) => {
+    const travelPoint = new TravelPointPresenter(this.#contentList);
+    travelPoint.init(mock);
+    this._pointPresenter.set(mock.pointId, travelPoint);
   }
 
   _renderContentList = () => {
@@ -64,8 +71,17 @@ export default class BoardPresenter {
   }
 
   _renderEmptyList = () => {
-    if (this.#contentList.element.firstChild === null) {
+    if (this.#travelPoints.length === 0) {
       render(this.#contentContainer, this.#contentEmpty, RenderPosition.BEFOREEND);
     }
+  }
+
+  _clearAllPoints = () => {
+    this._pointPresenter.forEach((point) => (point.destroy()));
+  }
+
+  _pointUpdateHandler = (updatedPoint) => {
+    this.#travelPoints = updateItem(this.#travelPoints, updatedPoint);
+    this._pointPresenter.get(updatedPoint.id).init(updatedPoint);
   }
 }

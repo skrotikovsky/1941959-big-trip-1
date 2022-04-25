@@ -1,6 +1,6 @@
 import TravelPoint from '../view/travel-point';
 import EditPoint from '../view/edit-point';
-import {render, RenderPosition, replace} from '../render';
+import {remove, render, RenderPosition, replace} from '../render';
 
 export default class TravelPointPresenter {
   #listContainer = null;
@@ -13,11 +13,29 @@ export default class TravelPointPresenter {
 
   init = (pointData) => {
     this.#pointData = pointData;
+    const prevPoint = this.#travelPointComponent;
+    const prevPointEditor = this.#travelPointEditor;
     this.#travelPointComponent = new TravelPoint(this.#pointData);
     this.#travelPointEditor = new EditPoint(this.#pointData);
     this._setClickHandlerToPoint();
     this._setClickHandlerToEditor();
-    this._renderTravelPoint();
+    if (prevPointEditor === null || prevPoint === null) {
+      this._renderTravelPoint();
+      return;
+    }
+    if (this.#listContainer.element.contains(prevPoint.element())) {
+      replace(this.#travelPointComponent, prevPoint);
+    }
+    if (this.#listContainer.element.contains(prevPointEditor.element())) {
+      replace(this.#travelPointEditor, prevPointEditor);
+    }
+    remove(prevPoint);
+    remove(prevPointEditor);
+  }
+
+  destroy = () => {
+    remove(this.#travelPointEditor);
+    remove(this.#travelPointComponent);
   }
 
   _renderTravelPoint = () => {
@@ -57,5 +75,14 @@ export default class TravelPointPresenter {
       document.removeEventListener('keydown', this._onEscKeyDown);
     });
   }
+
+  _setClickHandlerToStar = () => {
+    const star = this.#travelPointComponent.element.querySelector('.event__favorite-btn');
+    star.addEventListener('click',(evt) => {
+      evt.preventDefault();
+      this.#pointData.isFavorite = true;
+    });
+  }
 }
+
 
