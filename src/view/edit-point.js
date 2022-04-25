@@ -132,6 +132,10 @@ export default class EditPoint extends AbstractComponentClass{
   setClickPointHandler = (callback) => {
     this._callback.downClick = callback;
     this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#clickPointHandler);
+  }
+
+  setSubmitEditorHandler = (callback) => {
+    this._callback.submit = callback;
     this.element.querySelector('form').addEventListener('submit', this.#submitFormHandler);
   }
 
@@ -142,7 +146,7 @@ export default class EditPoint extends AbstractComponentClass{
 
   #submitFormHandler = (evt) => {
     evt.preventDefault();
-    this._callback.downClick();
+    this._callback.submit(this.#pointData);
   }
 
   get template() {

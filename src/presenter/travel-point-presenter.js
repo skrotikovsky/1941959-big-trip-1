@@ -7,8 +7,9 @@ export default class TravelPointPresenter {
   #pointData = null;
   #travelPointComponent = null;
   #travelPointEditor = null;
-  constructor(listContainer) {
+  constructor(listContainer,changeData) {
     this.#listContainer = listContainer;
+    this._changeData = changeData;
   }
 
   init = (pointData) => {
@@ -17,8 +18,10 @@ export default class TravelPointPresenter {
     const prevPointEditor = this.#travelPointEditor;
     this.#travelPointComponent = new TravelPoint(this.#pointData);
     this.#travelPointEditor = new EditPoint(this.#pointData);
-    this._setClickHandlerToPoint();
-    this._setClickHandlerToEditor();
+    this.#travelPointComponent.setFavoriteClickHandler(this._setClickHandlerToStar);
+    this.#travelPointEditor.setClickPointHandler(this._setClickHandlerToEditor);
+    this.#travelPointComponent.setClickPointHandler(this._setClickHandlerToPoint);
+    this.#travelPointEditor.setSubmitEditorHandler(this._setFormSubmitHandler);
     if (prevPointEditor === null || prevPoint === null) {
       this._renderTravelPoint();
       return;
@@ -77,11 +80,20 @@ export default class TravelPointPresenter {
   }
 
   _setClickHandlerToStar = () => {
-    const star = this.#travelPointComponent.element.querySelector('.event__favorite-btn');
-    star.addEventListener('click',(evt) => {
-      evt.preventDefault();
-      this.#pointData.isFavorite = true;
-    });
+    this._changeData(
+      Object.assign(
+        {},
+        this.#travelPointComponent,
+        {
+          isFavorite: !this.#travelPointComponent.isFavorite,
+        },
+      ),
+    );
+  }
+
+  _setFormSubmitHandler = (pointData) => {
+    this._changeData(pointData);
+    this._replaceEditToPoint();
   }
 }
 

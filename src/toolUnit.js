@@ -10,7 +10,7 @@ export const offerList = (pointData, itemHTML) => {
 };
 
 export const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
+  const index = items.findIndex((item) => item.pointId === update.pointId);
 
   if (index === -1) {
     return items;
@@ -21,4 +21,4 @@ export const updateItem = (items, update) => {
     update,
     ...items.slice(index + 1),
   ];
-}
+};

@@ -44,7 +44,7 @@ export default class BoardPresenter {
   }
 
   _renderPoint = (mock) => {
-    const travelPoint = new TravelPointPresenter(this.#contentList);
+    const travelPoint = new TravelPointPresenter(this.#contentList, this._pointUpdateHandler);
     travelPoint.init(mock);
     this._pointPresenter.set(mock.pointId, travelPoint);
   }
@@ -82,6 +82,8 @@ export default class BoardPresenter {
 
   _pointUpdateHandler = (updatedPoint) => {
     this.#travelPoints = updateItem(this.#travelPoints, updatedPoint);
-    this._pointPresenter.get(updatedPoint.id).init(updatedPoint);
+    console.log(updatedPoint);
+    console.log(this._pointPresenter.get(updatedPoint.pointId));
+    this._pointPresenter.get(updatedPoint.pointId).init(updatedPoint);
   }
 }
