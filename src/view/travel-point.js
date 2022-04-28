@@ -69,5 +69,7 @@ export default class TravelPoint extends AbstractComponentClass{
     this._callback.favoriteClick = callback;
     this.element.querySelector('.event__favorite-btn').addEventListener('click', this.favoriteClickHandler);
   }
+
+  pointId = () => this.#pointData.pointId
 }
 

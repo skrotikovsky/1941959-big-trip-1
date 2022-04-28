@@ -11,7 +11,6 @@ export const offerList = (pointData, itemHTML) => {
 
 export const updateItem = (items, update) => {
   const index = items.findIndex((item) => item.pointId === update.pointId);
-
   if (index === -1) {
     return items;
   }

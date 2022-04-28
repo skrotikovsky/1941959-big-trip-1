@@ -1,15 +1,22 @@
 import TravelPoint from '../view/travel-point';
 import EditPoint from '../view/edit-point';
 import {remove, render, RenderPosition, replace} from '../render';
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
 
 export default class TravelPointPresenter {
   #listContainer = null;
   #pointData = null;
   #travelPointComponent = null;
   #travelPointEditor = null;
-  constructor(listContainer,changeData) {
+
+  constructor(listContainer,changeData, changeMode) {
     this.#listContainer = listContainer;
     this._changeData = changeData;
+    this._changeMode = changeMode;
+    this._mode = Mode.DEFAULT;
   }
 
   init = (pointData) => {
@@ -26,10 +33,10 @@ export default class TravelPointPresenter {
       this._renderTravelPoint();
       return;
     }
-    if (this.#listContainer.element.contains(prevPoint.element())) {
+    if (this._mode === Mode.DEFAULT) {
       replace(this.#travelPointComponent, prevPoint);
     }
-    if (this.#listContainer.element.contains(prevPointEditor.element())) {
+    if (this._mode === Mode.EDITING) {
       replace(this.#travelPointEditor, prevPointEditor);
     }
     remove(prevPoint);
@@ -47,14 +54,15 @@ export default class TravelPointPresenter {
 
   _replacePointToEdit = () => {
     replace(this.#travelPointEditor, this.#travelPointComponent);
+    document.addEventListener('keydown', this._onEscKeyDown);
+    this._changeMode();
+    this._mode = Mode.EDITING;
   };
 
   _replaceEditToPoint = () => {
     replace(this.#travelPointComponent, this.#travelPointEditor);
-  };
-
-  _onMouseClickDown = () => {
-    this._replacePointToEdit();
+    this._mode = Mode.DEFAULT;
+    document.removeEventListener('keydown', this._onEscKeyDown);
   };
 
   _onEscKeyDown = (evt) => {
@@ -66,34 +74,27 @@ export default class TravelPointPresenter {
   };
 
   _setClickHandlerToPoint = () => {
-    this.#travelPointComponent.setClickPointHandler(() => {
-      this._onMouseClickDown();
-      document.addEventListener('keydown', this._onEscKeyDown);
-    });
+    this._replacePointToEdit();
   }
 
   _setClickHandlerToEditor = () => {
-    this.#travelPointEditor.setClickPointHandler(() => {
-      this._replaceEditToPoint();
-      document.removeEventListener('keydown', this._onEscKeyDown);
-    });
+    this._replaceEditToPoint();
   }
 
   _setClickHandlerToStar = () => {
-    this._changeData(
-      Object.assign(
-        {},
-        this.#travelPointComponent,
-        {
-          isFavorite: !this.#travelPointComponent.isFavorite,
-        },
-      ),
-    );
+    this.#pointData.isFavorite = !this.#pointData.isFavorite;
+    this._changeData(this.#pointData);
   }
 
   _setFormSubmitHandler = (pointData) => {
     this._changeData(pointData);
     this._replaceEditToPoint();
+  }
+
+  resetMode = () => {
+    if (this._mode !== Mode.DEFAULT) {
+      this._replaceEditToPoint();
+    }
   }
 }
 
