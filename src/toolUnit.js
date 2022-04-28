@@ -21,3 +21,25 @@ export const updateItem = (items, update) => {
     ...items.slice(index + 1),
   ];
 };
+
+export const SortType = {
+  DAY: 'day',
+  TIME: 'time',
+  PRICE: 'price',
+};
+
+export const sortById = (travelPresenters, typeOfSort) => {
+  const sortedList = travelPresenters;
+  sortedList.forEach((item) => item.data.price);
+
+  sortedList.sort((first, second) => {
+    if (first.value > second.name) {
+      return 1;
+    }
+    if (first.name < second.name) {
+      return -1;
+    }
+    // first должно быть равным b
+    return 0;
+  });
+};

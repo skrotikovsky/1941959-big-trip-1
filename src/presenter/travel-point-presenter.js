@@ -48,6 +48,8 @@ export default class TravelPointPresenter {
     remove(this.#travelPointComponent);
   }
 
+  get data() {return this.#pointData;}
+
   _renderTravelPoint = () => {
     render(this.#listContainer, this.#travelPointComponent, RenderPosition.BEFOREEND);
   };
@@ -82,8 +84,8 @@ export default class TravelPointPresenter {
   }
 
   _setClickHandlerToStar = () => {
-    this.#pointData.isFavorite = !this.#pointData.isFavorite;
-    this._changeData(this.#pointData);
+    this._pointData.isFavorite = !this._pointData.isFavorite;
+    this._changeData(this._pointData);
   }
 
   _setFormSubmitHandler = (pointData) => {

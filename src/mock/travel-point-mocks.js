@@ -49,8 +49,8 @@ const getDuration = () => {
 };
 */
 export const travelPointMocks = () => ({
-  travelPointTime: getDate(),
-  timeGap : `${getRandomInt(12)+1}-${getRandomInt(24) + 12}`,
+  travelPointDay: getRandomInt(16),
+  timeGap : `${getRandomInt(12)}`,
   duration : `${getRandomInt(12)}`,
   destination : getDestination(),
   travelPointType : getPointType(),
