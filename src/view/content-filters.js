@@ -40,26 +40,26 @@ export default class ContentFilters extends AbstractComponentClass{
 
   setDayClickHandler = (callback) => {
     this._callback.dayClick = callback;
-    this.element.querySelector('.trip-sort__item--time').addEventListener('click', this.dayClickHandler);
+    this.element.querySelector('.trip-sort__item--day').addEventListener('click', this.dayClickHandler);
   }
 
   timeClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.dayClick();
+    this._callback.timeClick();
   }
 
   setTimeClickHandler = (callback) => {
-    this._callback.dayClick = callback;
-    this.element.querySelector('.trip-sort__item--price').addEventListener('click', this.timeClickHandler);
+    this._callback.timeClick = callback;
+    this.element.querySelector('.trip-sort__item--time').addEventListener('click', this.timeClickHandler);
   }
 
   priceClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.dayClick();
+    this._callback.priceClick();
   }
 
   setPriceClickHandler = (callback) => {
-    this._callback.dayClick = callback;
-    this.element.querySelector('.trip-sort__item--day').addEventListener('click', this.priceClickHandler);
+    this._callback.priceClick = callback;
+    this.element.querySelector('.trip-sort__item--price').addEventListener('click', this.priceClickHandler);
   }
 }

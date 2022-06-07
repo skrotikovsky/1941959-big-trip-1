@@ -8,7 +8,7 @@ const Mode = {
 
 export default class TravelPointPresenter {
   #listContainer = null;
-  #pointData = null;
+  pointData = null;
   #travelPointComponent = null;
   #travelPointEditor = null;
 
@@ -20,11 +20,11 @@ export default class TravelPointPresenter {
   }
 
   init = (pointData) => {
-    this.#pointData = pointData;
+    this.pointData = pointData;
     const prevPoint = this.#travelPointComponent;
     const prevPointEditor = this.#travelPointEditor;
-    this.#travelPointComponent = new TravelPoint(this.#pointData);
-    this.#travelPointEditor = new EditPoint(this.#pointData);
+    this.#travelPointComponent = new TravelPoint(this.pointData);
+    this.#travelPointEditor = new EditPoint(this.pointData);
     this.#travelPointComponent.setFavoriteClickHandler(this._setClickHandlerToStar);
     this.#travelPointEditor.setClickPointHandler(this._setClickHandlerToEditor);
     this.#travelPointComponent.setClickPointHandler(this._setClickHandlerToPoint);
@@ -47,8 +47,6 @@ export default class TravelPointPresenter {
     remove(this.#travelPointEditor);
     remove(this.#travelPointComponent);
   }
-
-  get data() {return this.#pointData;}
 
   _renderTravelPoint = () => {
     render(this.#listContainer, this.#travelPointComponent, RenderPosition.BEFOREEND);
@@ -84,8 +82,8 @@ export default class TravelPointPresenter {
   }
 
   _setClickHandlerToStar = () => {
-    this._pointData.isFavorite = !this._pointData.isFavorite;
-    this._changeData(this._pointData);
+    this.pointData.isFavorite = !this.pointData.isFavorite;
+    this._changeData(this.pointData);
   }
 
   _setFormSubmitHandler = (pointData) => {

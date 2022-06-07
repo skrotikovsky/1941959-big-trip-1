@@ -28,18 +28,34 @@ export const SortType = {
   PRICE: 'price',
 };
 
-export const sortById = (travelPresenters, typeOfSort) => {
-  const sortedList = travelPresenters;
-  sortedList.forEach((item) => item.data.price);
-
+export const sortById = (setOfPoints, typeOfSort) => {
+  const sortedList = [];
+  for (const item of setOfPoints) {
+    if (typeOfSort === 'day') {
+      sortedList.push([item[0], item[1].pointData.travelPointDay]);
+    } else if (typeOfSort === 'price') {
+      sortedList.push([item[0], item[1].pointData.price]);
+    } else {
+      sortedList.push([item[0], item[1].pointData.timeGap]);
+    }
+  }
   sortedList.sort((first, second) => {
-    if (first.value > second.name) {
+    if (parseInt(first[1]) > parseInt(second[1])) {
       return 1;
     }
-    if (first.name < second.name) {
+    if (parseInt(first[1]) < parseInt(second[1])) {
       return -1;
     }
-    // first должно быть равным b
     return 0;
   });
+  return sortedList.map((x) => x[0]);
+};
+
+export const sortInfo = (id, mocks) => {
+  for (const mock of mocks) {
+    if (id === mock.pointId) {
+      return mock;
+    }
+  }
+  return null;
 };

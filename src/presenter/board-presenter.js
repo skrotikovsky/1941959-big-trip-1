@@ -6,7 +6,7 @@ import ContentList from '../view/content-list';
 import {render, RenderPosition} from '../render';
 import EmptyList from '../view/empty-list';
 import TravelPointPresenter from './travel-point-presenter';
-import {updateItem} from '../toolUnit';
+import {sortById, sortInfo, SortType, updateItem} from '../toolUnit';
 
 export default class BoardPresenter {
   #contentContainer = null;
@@ -21,19 +21,23 @@ export default class BoardPresenter {
   #travelPoints = [];
 
   constructor(menuContainer, contentContainer, filtersContainer) {
-    this._pointPresenter = new Map();
+    this._setOfPoints = new Map();
     this.#menuContainer = menuContainer;
     this.#contentContainer = contentContainer;
     this.#filtersContainer = filtersContainer;
   }
 
   init = (travelPoints) => {
+    this.#contentFilters.setTimeClickHandler(this._setTimeFilterClickHandler);
+    this.#contentFilters.setDayClickHandler(this._setDayFilterClickHandler);
+    this.#contentFilters.setPriceClickHandler(this._setPriceFilterClickHandler);
     this.#travelPoints = travelPoints.slice();
     this._renderHeadMenu();
     this._renderFilters();
     this._renderContentFilters();
     this._renderContentList();
     this._renderPointList();
+    this._renderSortedPointList(SortType.DAY);
     this._renderEmptyList();
   }
 
@@ -43,10 +47,26 @@ export default class BoardPresenter {
     }
   }
 
+  _renderSortedPointList = (sortType) => {
+    const sortFilterButton = document.querySelector(`#sort-${sortType}`);
+    if (sortFilterButton.getAttribute('checked') === null) {
+      const idSortedSet = sortById(this._setOfPoints, sortType);
+      const oldSort = this._setOfPoints;
+      const oldMock = this.#travelPoints;
+      this._clearAllPoints();
+      for (const id of idSortedSet) {
+        oldSort.get(id).init(sortInfo(id, oldMock));
+      }
+      idSortedSet.forEach((id) => this._renderPoint(sortInfo(id, oldMock)));
+      document.querySelectorAll('.trip-sort__input').forEach((x) => x.removeAttribute('checked'));
+      sortFilterButton.setAttribute('checked', 'checked');
+    }
+  }
+
   _renderPoint = (mock) => {
     const travelPoint = new TravelPointPresenter(this.#contentList, this._pointUpdateHandler, this._changeModeHandler);
     travelPoint.init(mock);
-    this._pointPresenter.set(mock.pointId, travelPoint);
+    this._setOfPoints.set(mock.pointId, travelPoint);
   }
 
   _renderContentList = () => {
@@ -77,15 +97,27 @@ export default class BoardPresenter {
   }
 
   _clearAllPoints = () => {
-    this._pointPresenter.forEach((point) => (point.destroy()));
+    this._setOfPoints.forEach((point) => (point.destroy()));
   }
 
   _pointUpdateHandler = (updatedPoint) => {
     this.#travelPoints = updateItem(this.#travelPoints, updatedPoint);
-    this._pointPresenter.get(updatedPoint.pointId).init(updatedPoint);
+    this._setOfPoints.get(updatedPoint.pointId).init(updatedPoint);
   }
 
   _changeModeHandler = () => {
-    this._pointPresenter.forEach((presenter) => presenter.resetMode());
+    this._setOfPoints.forEach((presenter) => presenter.resetMode());
+  }
+
+  _setDayFilterClickHandler = () => {
+    this._renderSortedPointList(SortType.DAY);
+  }
+
+  _setTimeFilterClickHandler = () => {
+    this._renderSortedPointList(SortType.TIME);
+  }
+
+  _setPriceFilterClickHandler = () => {
+    this._renderSortedPointList(SortType.PRICE);
   }
 }
