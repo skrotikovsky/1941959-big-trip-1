@@ -5,7 +5,7 @@ const travelPoint = (pointData) => (`<li class="trip-events__item">
               <div class="event">
                 <time class="event__date" datetime="2019-03-18">MAR ${pointData.travelPointDay}</time>
                 <div class="event__type">
-                  <img class="event__type-icon" width="42" height="42" src=${pointData.img()} alt="Event type icon">
+                  <img class="event__type-icon" width="42" height="42" src="img/icons/${pointData.travelPointType.toLowerCase()}.png" alt="Event type icon">
                 </div>
                 <h3 class="event__title">${pointData.travelPointType} ${pointData.destination}</h3>
                 <div class="event__schedule">

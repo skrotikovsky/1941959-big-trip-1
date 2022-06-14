@@ -59,3 +59,30 @@ export const sortInfo = (id, mocks) => {
   }
   return null;
 };
+
+export const setWithoutDestination = ['Check-in', 'Sightseeing', 'Restaurant'];
+export const setWithoutOffers = ['Taxi', 'Bus'];
+
+export const addListenerToRadios = (element, withoutDestination, withoutOffers, allMembers) => {
+  element.querySelector('input:checked').checked = true;
+  element.querySelectorAll('.event__type-input').forEach((x) => x.addEventListener('click', (evt) => {
+    if (!x.getAttribute('checked')) {
+      evt.preventDefault();
+      const typeLabel = element.querySelector(`label[for = ${x.getAttribute('id')}]`);
+      if (setWithoutDestination.indexOf(typeLabel.textContent)+1) {
+        withoutDestination(typeLabel.textContent);
+      }
+      else if(setWithoutOffers.indexOf(typeLabel.textContent)+1) {
+        withoutOffers(typeLabel.textContent);
+      }
+      else {
+        allMembers(typeLabel.textContent);
+      }
+      const oldCheck = element.querySelector('input[checked = "true"]');
+      x.setAttribute('checked', 'true');
+      oldCheck.removeAttribute('checked');
+      element.querySelector('.event__type-icon').setAttribute('src', `img/icons/${x.getAttribute('value')}.png`);
+      element.querySelector('.event__type-output').textContent = typeLabel.textContent;
+    }
+  }));
+};

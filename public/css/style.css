@@ -677,10 +677,10 @@ main {
   .event__type-label:hover {
     color: #ffd054; }
 
-.event__type-input:checked + .event__type-label {
+.event__type-input[checked = 'true'] + .event__type-label {
   color: #000000;
   background-color: #ffd054; }
-  .event__type-input:checked + .event__type-label::after {
+  .event__type-input[checked = 'true'] + .event__type-label::after {
     content: "";
     position: absolute;
     top: 50%;

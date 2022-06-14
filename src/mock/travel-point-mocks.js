@@ -13,11 +13,11 @@ const getPointType = () => {
 };
 
 const getOffer = () => ({
-  offer1 : {id: 'offer1', cost: 'cost1', isChecked: Boolean(getRandomInt(2)), fullName: 'Add luggage'},
-  offer2 : {id: 'offer2', cost: 'cost2', isChecked: Boolean(getRandomInt(2)), fullName: 'Switch to comfort'},
-  offer3 : {id: 'offer3', cost: 'cost3', isChecked: Boolean(getRandomInt(2)), fullName: 'Add meal'},
-  offer4 : {id: 'offer4', cost: 'cost4', isChecked: Boolean(getRandomInt(2)), fullName: 'Choose seats'},
-  offer5 : {id: 'offer5', cost: 'cost5', isChecked: Boolean(getRandomInt(2)), fullName: 'Travel by train'}}
+  offer1 : {id: 'offer1', cost: '10', isChecked: Boolean(getRandomInt(2)), fullName: 'Add luggage'},
+  offer2 : {id: 'offer2', cost: '5', isChecked: Boolean(getRandomInt(2)), fullName: 'Switch to comfort'},
+  offer3 : {id: 'offer3', cost: '30', isChecked: Boolean(getRandomInt(2)), fullName: 'Add meal'},
+  offer4 : {id: 'offer4', cost: '50', isChecked: Boolean(getRandomInt(2)), fullName: 'Choose seats'},
+  offer5 : {id: 'offer5', cost: '20', isChecked: Boolean(getRandomInt(2)), fullName: 'Travel by train'}}
 );
 
 export const getDescription = () => {
@@ -57,7 +57,7 @@ export const travelPointMocks = () => ({
   description : getDescription(),
   offers: getOffer(),
   price : getRandomInt(200) + 5,
-  img : () => `https://picsum.photos/248/152?r=${getRandomInt(1000).toString()}`,
+  img : () => `https://picsum.photos/248/152?r=${getRandomInt(2000).toString()}`,
   isFavorite : Boolean(getRandomInt(2)),
   pointId : nanoid(),
 });
